@@ -13,7 +13,7 @@
 
 ```
 	dependencies {
-	        implementation 'com.github.ITAnt:NumberPassword:-SNAPSHOT'
+	        implementation 'com.github.ITAnt:NumberPassword:bed675180e'
 	}
 
 ```
