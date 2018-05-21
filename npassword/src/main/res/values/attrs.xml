@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NumberPassword">
+        <attr name="frame_height" format="dimension" />
+        <attr name="frame_background" format="reference|color" />
+        <attr name="max_length" format="integer" />
+        <attr name="indicator" format="reference|color" />
+    </declare-styleable>
+</resources>

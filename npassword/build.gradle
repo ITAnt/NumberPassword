@@ -1,0 +1,102 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+// 这个version是library的版本，更新后也需要更改这个值
+version = "1.0.1"
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+def siteUrl = 'https://github.com/ITAnt/TestLib'// 项目的主页
+def gitUrl = 'https://github.com/ITAnt/TestLib.git'// Git仓库的url
+group = "com.tongcent.testlib" // Maven Group ID for the artifact，
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'nplib'//项目的描述 你可以多写一点
+                url 'https://github.com/ITAnt/NumberPassword'//
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'itant' //
+                        name 'Jason Zhan'//
+                        email 'ccggkko@163.com'//
+                    }
+                }
+                scm {
+                    connection 'https://github.com/ITAnt/NumberPassword'//
+                    developerConnection 'https://github.com/ITAnt/NumberPassword.git'//
+                    url 'https://github.com/ITAnt/NumberPassword'//
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+Properties properties = new Properties()
+//读取properties的配置信息，当然直接把信息写到代码里也是可以的
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        //这个应该是传到maven的仓库的
+        repo = "maven"
+        name = "npassword"//发布的项目名字小写
+        websiteUrl = 'https://github.com/ITAnt/NumberPassword'//
+        vcsUrl = 'https://github.com/ITAnt/NumberPassword.git'//
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
