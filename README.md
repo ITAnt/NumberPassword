@@ -3,7 +3,19 @@
 
 引入：
 ```
-implementation 'com.itant.npassword:npassword:1.0.1'
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+```
+	dependencies {
+	        implementation 'com.github.ITAnt:NumberPassword:-SNAPSHOT'
+	}
+
 ```
 
 简单使用：
