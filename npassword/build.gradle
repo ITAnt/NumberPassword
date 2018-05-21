@@ -37,7 +37,7 @@ dependencies {
 
 def siteUrl = 'https://github.com/ITAnt/TestLib'// 项目的主页
 def gitUrl = 'https://github.com/ITAnt/TestLib.git'// Git仓库的url
-group = "com.tongcent.testlib" // Maven Group ID for the artifact，
+group = "com.itant.npassword" // Maven Group ID for the artifact，
 install {
     repositories.mavenInstaller {
         pom {
@@ -74,6 +74,7 @@ task sourcesJar(type: Jar) {
 task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.encoding = "UTF-8"
 }
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
