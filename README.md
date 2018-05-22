@@ -13,7 +13,7 @@
 
 ```
 	dependencies {
-	        implementation 'com.github.ITAnt:NumberPassword:bed675180e'
+	        implementation 'com.github.ITAnt:NumberPassword:02cdd5a065'
 	}
 
 ```
@@ -50,11 +50,18 @@
 
 监听：
 ```
-NumberPassword np_test = findViewById(R.id.np_test);
+NNumberPassword np_test = findViewById(R.id.np_test);
         np_test.setOnPasswordChangeListener(new OnPasswordChangeListener() {
             @Override
-            public void onPasswordChange(String currentPassword) {
-                Log.i("np", currentPassword);
+            public void onPasswordChange(String currentPasswordText, int maxPasswordLength) {
+                if (!TextUtils.isEmpty(currentPassword) && currentPassword.length() == maxPasswordLength) {
+		    if (TextUtils.equals(currentPassword, "123456")) {
+			startActivity(new Intent(this, MainActivity.class));
+			finish();
+		    } else {
+			ToastTool.showShort(this, "Wrong password");
+		    }
+        	}
             }
         });
 ```
