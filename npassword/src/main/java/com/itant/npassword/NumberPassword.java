@@ -30,6 +30,7 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
 
     public static final int DEFAULT_MAX_LENGTH = 6;
     public static final int DEFAULT_HEIGHT = 56;
+    private int maxPasswordLength;
 
     public NumberPassword(final Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,9 +44,9 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NumberPassword);
 
         // 密码长度
-        int maxLength = typedArray.getInteger(R.styleable.NumberPassword_max_length, DEFAULT_MAX_LENGTH);
-        if (maxLength <= 0) {
-            maxLength = DEFAULT_MAX_LENGTH;
+        maxPasswordLength = typedArray.getInteger(R.styleable.NumberPassword_max_length, DEFAULT_MAX_LENGTH);
+        if (maxPasswordLength <= 0) {
+            maxPasswordLength = DEFAULT_MAX_LENGTH;
         }
 
         // 布局高度
@@ -61,8 +62,8 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
         // 指示器
         int indicatorResource = typedArray.getResourceId(R.styleable.NumberPassword_indicator, R.drawable.shape_default_indicator);
 
-        initIndicator(context, ll_indicator, bgResource, indicatorResource, pxHeight, maxLength);
-        initEditText(context, et_password, maxLength);
+        initIndicator(context, ll_indicator, bgResource, indicatorResource, pxHeight, maxPasswordLength);
+        initEditText(context, et_password, maxPasswordLength);
 
         typedArray.recycle();
     }
@@ -154,7 +155,7 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
         }
 
         if (onPasswordChangeListener != null) {
-            onPasswordChangeListener.onPasswordChange(editable.toString());
+            onPasswordChangeListener.onPasswordChange(editable.toString(), maxPasswordLength);
         }
     }
 
@@ -162,5 +163,13 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
 
     public void setOnPasswordChangeListener(OnPasswordChangeListener onPasswordChangeListener) {
         this.onPasswordChangeListener = onPasswordChangeListener;
+    }
+
+    /**
+     *
+     * @return password length
+     */
+    public int getPasswordLength() {
+        return maxPasswordLength;
     }
 }

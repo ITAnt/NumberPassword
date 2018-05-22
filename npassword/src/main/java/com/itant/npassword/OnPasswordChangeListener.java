@@ -5,5 +5,5 @@ package com.itant.npassword;
  */
 
 public interface OnPasswordChangeListener {
-    void onPasswordChange(String currentPassword);
+    void onPasswordChange(String currentPasswordText, int maxPasswordLength);
 }
