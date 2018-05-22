@@ -1,7 +1,7 @@
 package com.itant.numberpassword;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.itant.npassword.NumberPassword;
@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         NumberPassword np_test = findViewById(R.id.np_test);
         np_test.setOnPasswordChangeListener(new OnPasswordChangeListener() {
             @Override
-            public void onPasswordChange(String currentPassword) {
-                Log.i("np", currentPassword);
+            public void onPasswordChange(String currentPasswordText, int maxPasswordLength) {
+                Log.i("np", currentPasswordText);
             }
         });
     }
