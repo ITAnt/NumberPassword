@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -112,12 +114,8 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
         });
     }
 
-    private void initEditText(Context context, EditText editText, int maxLength) {
-        // 自动获取焦点，弹出软键盘
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        ((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    private void initEditText(Context context, final EditText editText, int maxLength) {
+
         // 单行居中显示
         editText.setSingleLine(true);
         editText.setEllipsize(TextUtils.TruncateAt.END);
@@ -131,6 +129,22 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
         editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxLength) });
 
         editText.addTextChangedListener(this);
+
+        // 自动获取焦点，弹出软键盘
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        ((Activity)context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        final InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
+
+                }
+            }, 500);
+        }
     }
 
     @Override
