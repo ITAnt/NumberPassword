@@ -140,8 +140,7 @@ public class NumberPassword extends FrameLayout implements TextWatcher {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
-
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
                 }
             }, 500);
         }
